@@ -1,0 +1,52 @@
+Name
+===
+
+{{ person.lastname }} {{ person.firstname }} {{ person.fathersname }}
+
+Phones
+========
+
+{% for phone in phones -%}
+{{ phone }}
+{% endfor %}
+
+Address
+===== 
+
+Street: {{ address.street }}
+House: {{ address.house }}
+Building: {{ address.building }}
+Porch: {{ address.porch }}
+Floor: {{ address.floor }}
+Appartment/office: {{ address.room }}
+Comments: {{ address.comments }}
+
+Order
+================
+
+{% for p in cart -%}
+{{ p.name }}{% if p.size %} ({{ p.size }}){% endif %} {{ p.price }} RUR x {{ p.count }} {{ p.units }} = {{ p.total }} RUR
+{% if p.additions %}
+{%- for a in p.additions -%}
+  * {{ a.name}} {{ a.price }} RUR x {{ p.count }} x {{ a.count }} units = {{ a.total * p.count }} RUR
+{% endfor -%}
+{% endif -%}
+{% endfor %}
+
+Comments: {{ order_comments }}
+
+Total
+=====
+
+{{ total }} RUR
+
+Change Order Status
+========================
+
+{# ought to be defined in settings #}
+{% set public_api_order_change_status_url = 'http://example.com/' %}
+Cooking - {{ public_api_order_change_status_url }}?secret={{ secret }}&status=cooking
+Cooked - {{ public_api_order_change_status_url }}?secret={{ secret }}&status=cooked
+Delivering - {{ public_api_order_change_status_url }}?secret={{ secret }}&status=delivering
+Delivered - {{ public_api_order_change_status_url }}?secret={{ secret }}&status=delivered
+Cancelled - {{ public_api_order_change_status_url }}?secret={{ secret }}&status=cancelled
